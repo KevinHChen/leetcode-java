@@ -1,4 +1,35 @@
 /**
+ * Still a DFS, but add a used array to avoid .contains() check, >90%
+ **/
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        results = new ArrayList();
+        boolean[] used = new boolean[nums.length];
+        backtrack(used, nums, new ArrayList<Integer>());
+        return results;
+    }
+
+    private List<List<Integer>> results;
+
+    private void backtrack(boolean[] used, int[] nums, List<Integer> path) {
+        if (path.size() == nums.length) {
+            results.add(new ArrayList<Integer>(path));
+        }
+
+        for (int i = 0; i < nums.length; ++i) {
+            if (used[i] == true)
+                continue;
+
+            List<Integer> newPath = new ArrayList<>(path);
+            newPath.add(nums[i]);
+            boolean[] used2 = used.clone();
+            used2[i] = true;
+            backtrack(used2, nums, newPath);
+        }
+    }
+}
+
+/**
  * A really slow DFS solution (2%)
  **/
 class Solution {
