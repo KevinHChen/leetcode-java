@@ -1,4 +1,44 @@
 /**
+ * Solution 2: >35%
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+import java.util.*;
+
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.push(root);
+        long preVal = Long.MIN_VALUE;
+        root = root.left;
+
+        while (!stack.isEmpty() || root!=null) {
+            while (root!=null) {
+                stack.push(root);
+                root= root.left;
+            }
+            root = stack.pop();
+            int currVal = root.val;
+            if (currVal<=preVal) return false;
+            preVal = currVal;
+            root=root.right;
+        }
+        return true;
+    }
+}
+
+/**
  * Solution 1: slow, >5%
  * Definition for a binary tree node.
  * public class TreeNode {
